@@ -1,8 +1,10 @@
 package ru.apteka.making_order.presentation.making_order
 
+import android.util.Log
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import ru.apteka.components.data.services.message_notice_service.showCommonDialog
 import ru.apteka.components.data.utils.navigateWithAnim
 import ru.apteka.components.ui.BaseFragment
 import ru.apteka.making_order.R
@@ -30,9 +32,6 @@ class MakingOrderFragment : BaseFragment<MakingOrderViewModel, MakingOrderFragme
     override val layoutId: Int = R.layout.making_order_fragment
 
     override fun onViewBindingInflated(binding: MakingOrderFragmentBinding) {
-        /*setFragmentResultListener(PERSONAL_DATA_CHANGE_RESULT) { _, bundle ->
-            viewModel.personalData.value = bundle.getParcelable(PERSONAL_DATA_CHANGE_RESULT_DATA)!!
-        }*/
         setFragmentResultListener(MAKING_ORDER_ARGUMENT_DELIVERY) { _, bundle ->
             viewModel.selectedDeliveryDate.value = bundle.getParcelable(
                 MAKING_ORDER_ARGUMENT_DELIVERY_DATA
@@ -49,13 +48,7 @@ class MakingOrderFragment : BaseFragment<MakingOrderViewModel, MakingOrderFragme
 
         binding.viewModel = viewModel
 
-        binding.makingOrderPersonalData.setOnClickListener {
-            /*viewModel.navigationManager.generalNavController.navigateWithAnim(
-                UserProfileApiR.id.personal_data_graph
-            )*/
-        }
-
-        binding.makingOrderRecipients.setOnClickListener {
+        binding.makingOrderRecipientsAdd.setOnClickListener {
             viewModel.navigationManager.generalNavController.navigateWithAnim(
                 MakingOrderFragmentDirections.toMakingOrderRecipientsFragment()
             )
@@ -66,7 +59,13 @@ class MakingOrderFragment : BaseFragment<MakingOrderViewModel, MakingOrderFragme
                 Slot.copySlotArray(PredefinedSlots.RUS_PHONE_NUMBER),
                 true
             )
-        ).installOnAndFill(binding.tvMakingOrderPhone)
+        ).installOnAndFill(binding.etMakingOrderPhoneNumber)
+
+        binding.makingOrderElectronicReceiptInfo.setOnClickListener {
+            /*showCommonDialog(
+
+            )*/
+        }
 
         binding.mbMakingOrderComplete.setOnClickListener {
             viewModel.navigationManager.generalNavController.navigateWithAnim(
